@@ -2,14 +2,24 @@ export default {
   async fetch(request, env, context) {
     const url = new URL(request.url);
 
+    const NGINX_SERVER = env.NGINX_SERVER;
+
+    if (!NGINX_SERVER) {
+      return new Response("Configuration Error: NGINX_SERVER environment variable is missing.", { status: 500 });
+    }
+
     if (url.pathname !== "/" && url.pathname !== "") {
-      return env.ASSETS.fetch(request);
+      return fetch(`${NGINX_SERVER}${url.pathname}${url.search}`, {
+        headers: request.headers
+      });
     }
 
     const accept = request.headers.get("Accept") || request.headers.get("accept") || "";
 
     if (accept.includes("text/html") && !url.searchParams.has("s") && !url.searchParams.has("raw")) {
-      return env.ASSETS.fetch(request);
+      return fetch(`${NGINX_SERVER}/`, {
+        headers: request.headers
+      });
     }
 
     const rawUrl = "https://raw.githubusercontent.com/7yd7/Hub4V/Menu/client.luau";
