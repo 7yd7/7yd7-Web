@@ -8,9 +8,18 @@ export default {
       return new Response("Configuration Error: NGINX_SERVER environment variable is missing.", { status: 500 });
     }
 
+    const cleanHeaders = new Headers();
+    const headersToForward = ["accept", "user-agent", "accept-language", "accept-encoding", "content-type"];
+    for (const header of headersToForward) {
+      const value = request.headers.get(header);
+      if (value) {
+        cleanHeaders.set(header, value);
+      }
+    }
+
     if (url.pathname !== "/" && url.pathname !== "") {
       return fetch(`${NGINX_SERVER}${url.pathname}${url.search}`, {
-        headers: request.headers
+        headers: cleanHeaders
       });
     }
 
@@ -18,7 +27,7 @@ export default {
 
     if (accept.includes("text/html") && !url.searchParams.has("s") && !url.searchParams.has("raw")) {
       return fetch(`${NGINX_SERVER}/`, {
-        headers: request.headers
+        headers: cleanHeaders
       });
     }
 
