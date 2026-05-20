@@ -9,7 +9,7 @@ export default {
     }
 
     const cleanHeaders = new Headers();
-    const headersToForward = ["accept", "user-agent", "accept-language", "accept-encoding", "content-type"];
+    const headersToForward = ["accept", "user-agent", "accept-language", "content-type"];
     for (const header of headersToForward) {
       const value = request.headers.get(header);
       if (value) {
@@ -18,17 +18,27 @@ export default {
     }
 
     if (url.pathname !== "/" && url.pathname !== "") {
-      return fetch(`${NGINX_SERVER}${url.pathname}${url.search}`, {
-        headers: cleanHeaders
-      });
+      try {
+        const response = await fetch(`${NGINX_SERVER}${url.pathname}${url.search}`, {
+          headers: cleanHeaders
+        });
+        return response;
+      } catch (err) {
+        return new Response("Error connecting to origin server.", { status: 502 });
+      }
     }
 
     const accept = request.headers.get("Accept") || request.headers.get("accept") || "";
 
     if (accept.includes("text/html") && !url.searchParams.has("s") && !url.searchParams.has("raw")) {
-      return fetch(`${NGINX_SERVER}/`, {
-        headers: cleanHeaders
-      });
+      try {
+        const response = await fetch(`${NGINX_SERVER}/`, {
+          headers: cleanHeaders
+        });
+        return response;
+      } catch (err) {
+        return new Response("Error connecting to origin server for HTML.", { status: 502 });
+      }
     }
 
     const rawUrl = "https://raw.githubusercontent.com/7yd7/Hub4V/Menu/client.luau";
