@@ -370,12 +370,12 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            background: linear-gradient(90deg, rgba(30, 41, 59, 0.4), rgba(15, 23, 42, 0.6));
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            background: color-mix(in srgb, var(--bg-card) 70%, transparent);
+            border: 1px solid var(--bg-card-border);
             border-radius: 999px;
             overflow: hidden;
             backdrop-filter: blur(12px);
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2), inset 0 1px 1px rgba(255, 255, 255, 0.05);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
             transition: all 0.2s ease;
             padding: 16px 24px;
             margin: 0 auto 32px auto;
@@ -387,7 +387,7 @@
 
         .copy-field:hover {
             border-color: rgba(167, 139, 250, 0.3);
-            background: linear-gradient(90deg, rgba(30, 41, 59, 0.5), rgba(15, 23, 42, 0.7));
+            background: color-mix(in srgb, var(--bg-card) 70%, transparent);
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2), 0 0 15px rgba(167, 139, 250, 0.1);
         }
 
@@ -439,14 +439,14 @@
         }
 
         [data-theme="light"] .copy-field {
-            background: linear-gradient(90deg, rgba(255, 255, 255, 0.6), rgba(240, 240, 245, 0.8));
-            border: 1px solid rgba(0, 0, 0, 0.05);
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05), inset 0 1px 1px rgba(255, 255, 255, 1);
+            background: color-mix(in srgb, var(--bg-card) 70%, transparent);
+            border: 1px solid var(--bg-card-border);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
         }
 
         [data-theme="light"] .copy-field:hover {
             border-color: rgba(124, 58, 237, 0.3);
-            background: linear-gradient(90deg, rgba(255, 255, 255, 0.8), rgba(245, 245, 250, 0.9));
+            background: color-mix(in srgb, var(--bg-card) 70%, transparent);
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08), 0 0 15px rgba(124, 58, 237, 0.1);
         }
 
@@ -553,7 +553,7 @@
 
         .global-search-input {
             width: 100%;
-            padding: 16px 120px 16px 52px;
+            padding: 16px 20px 16px 52px;
             background: color-mix(in srgb, var(--bg-card) 70%, transparent);
             border: 1px solid var(--bg-card-border);
             border-radius: 999px;
@@ -573,28 +573,6 @@
         .global-search-input:focus {
             border-color: var(--accent);
             box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 20%, transparent);
-        }
-
-        .search-action-btn {
-            position: absolute;
-            right: 8px;
-            top: 50%;
-            transform: translateY(-50%);
-            padding: 8px 20px;
-            border-radius: 999px;
-            background: color-mix(in srgb, var(--text-primary) 10%, transparent);
-            color: var(--text-secondary);
-            border: none;
-            font-family: var(--font);
-            font-size: 13px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background var(--transition), color var(--transition);
-        }
-
-        .search-action-btn:hover {
-            background: color-mix(in srgb, var(--text-primary) 15%, transparent);
-            color: var(--text-primary);
         }
 
         #executorsBgContainer {
@@ -1167,7 +1145,6 @@
                     <line x1="21" y1="21" x2="16.65" y2="16.65" />
                 </svg>
                 <input type="text" class="global-search-input" id="searchInput" placeholder="Search games...">
-                <button class="search-action-btn">Search</button>
             </div>
         </div>
 
